@@ -12,11 +12,8 @@ use Illuminate\Support\Facades\Storage;
 class PhotoController extends Controller
 {
 
-    protected $bunnyClient;
-
     public function __construct(Client $bunnyClient)
     {
-        $this->bunnyClient = $bunnyClient;
     }
 
 
