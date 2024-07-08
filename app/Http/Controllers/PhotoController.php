@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Photo;
-use Bunny\Storage\Client;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -12,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class PhotoController extends Controller
 {
 
-    public function __construct(Client $bunnyClient)
+    public function __construct()
     {
     }
 
