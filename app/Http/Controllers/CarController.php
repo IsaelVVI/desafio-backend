@@ -12,7 +12,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = Car::all();
+        $cars = Car::with('photos')->get();
         return response()->json($cars);
     }
 
@@ -29,6 +29,7 @@ class CarController extends Controller
             'color' => 'required|string|max:255',
             'mileage' => 'required|numeric',
             'city' => 'required|string|max:255',
+            'created' => 'required|string|max:255',
             'plate' => 'required|string|max:255|unique:cars',
         ]);
 
@@ -58,12 +59,26 @@ class CarController extends Controller
             'color' => 'sometimes|required|string|max:255',
             'mileage' => 'sometimes|required|numeric',
             'city' => 'sometimes|required|string|max:255',
+            'created' => 'sometimes|required|string|max:255',
+            'update_photos' => 'sometimes|boolean',
             'view' => 'sometimes|required|integer',
             'plate' => 'sometimes|required|string|max:255|unique:cars,plate,' . $id,
         ]);
 
         $car = Car::findOrFail($id);
-        $car->update($request->all());
+
+        if($request->has('view')){
+            $car->view = $car->view + $request->view;
+            $car->save();
+        }
+
+        if ($request->has('update_photos')) {
+            $car->photos()->delete();
+        }
+
+        $car->update($request->except('view'));
+        
+
         return response()->json($car);
     }
 
@@ -73,6 +88,7 @@ class CarController extends Controller
     public function destroy($id)
     {
         $car = Car::findOrFail($id);
+        $car->photos()->delete();
         $car->delete();
         return response()->json(null, 204);
     }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('view')->default(0);
             $table->string('plate', 191)->unique();
             $table->string('city');
+            $table->string('created');
             $table->timestamps();
         });
     }

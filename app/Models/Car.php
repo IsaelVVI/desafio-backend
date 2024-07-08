@@ -18,6 +18,7 @@ class Car extends Model
         'mileage',
         'plate',
         'city',
+        'created',
         'view',
     ];
 
